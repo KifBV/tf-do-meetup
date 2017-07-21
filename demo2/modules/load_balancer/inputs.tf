@@ -2,6 +2,7 @@ variable "env"      { }
 variable "region"   { }
 variable "ssh_keys" { type = "list" }
 variable "name"     { }
+variable "image"    { }
 
 variable "bootstrap" {
   default = "bootstrap.sh"
@@ -9,10 +10,6 @@ variable "bootstrap" {
 
 variable "count"    {
   default = 1
-}
-
-variable "image"    {
-  default = "ubuntu-16-04-x64"
 }
 
 variable "size"     {
