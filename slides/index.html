@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link href="css/impress-demo.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+</head>
+<body>
+
+<div id="impress">
+
+<!-- Title -->
+<div class="step box" data-x="0" data-y="0" data-scale="3">
+<h1 style="text-align:center">Infrastructure as Code with<br/>Terraform and Digital Ocean</h1>
+<h5 style="text-align:center;color:blue"><a href="https://github.com/KifBV/tf-do-meetup/">github.com/kifbv/tf-do-meetup</a></h5>
+<h6 style="text-align:center">DO Meetup, Bucharest - 24/07/2017</h6>
+<h6 style="text-align:center"><a href="https://www.linkedin.com/in/franckratier/">Franck Ratier</a></h5>
+</div>
+
+<!-- First part: Terraform intro -->
+<div class="step" data-x="0" data-y="2000" data-z="2000" data-rotate-x="90">
+<p>resource "digitalocean_droplet" {</p>
+</div>
+
+<!-- Why Terraform (config as text, declarative, easy to read, write, version control, audit)-->
+<div class="step" data-x="2000" data-y="2000" data-z="2000" data-rotate-x="90">
+<p>Infrastructure is represented in text files</p>
+<p>These files declare each component of the infrastructure</p>
+<p>Easy to read/write/audit</p>
+</div>
+
+<!-- Write -->
+<div class="step" data-x="4000" data-y="2000" data-z="2000" data-rotate-x="90">
+<p>Because it's just text, infrastructure is:</p>
+<ul>
+<li>easy to version control</li>
+<li>easy to share/review</li>
+<li>easy to re-use</li>
+</ul>
+</div>
+<!-- Plan ((written) config, (recorded) state, (existing) infra) -->
+<!-- Apply (create, update, delete) -->
+	
+<!-- Second part: demo one, single droplet -->
+<div class="step" data-x="0" data-y="2000" data-z="3000" data-rotate-x="90">
+	<p>A basic Terraform configuration would include:</p>
+<ul>
+	<li><b>variables</b>: to parameterise the configuration</li>
+	<li><b>providers</b>: to understand API interactions and expose resources (need credentials)</li>
+	<li><b>resources</b>: to declare the components of the infrastructure</li>
+</ul>
+</div>
+
+<div class="step" data-x="1500" data-y="2000" data-z="3000" data-rotate-x="90">
+<p style="text-align:right">variables in .tf files</p>
+<div class="code">variable "do_token" { }
+variable "ssh_key"  { default = "~/.ssh/id_rsa_do.pub" }
+variable "vm_size"  { default = "512mb" }</div>
+<p style="text-align:right">variables in .tfvars files</p>
+<div class="code">ssh_key = "~/.ssh/id_rsa_do.pub"
+vm_size = "512mb"</div>
+</div>
+
+<div class="step" data-x="3000" data-y="2000" data-z="3000" data-rotate-x="90">
+<p style="text-align:right;">Test</p>
+<div class="code">provider "digitalocean" {
+  token   = "${var.do_token}"
+  version = "~> 0.1"
+}</div>
+</div>
+
+<div class="step" data-x="4000" data-y="2000" data-z="3000" data-rotate-x="90">
+<div class="code">resource "digitalocean_droplet" "vm1" {
+  image    = "ubuntu-16-04-x64"
+  name     = "demo1"
+  region   = "fra1"
+  size     = "${var.vm_size}"
+  ssh_keys = ["${digitalocean_ssh_key.default.fingerprint}"]
+}
+
+resource "digitalocean_ssh_key" "default" {
+  name       = "default-key"
+  public_key = "${file(var.ssh_key)}"
+}</div>
+</div>
+<!-- Third part: demo one, single droplet -->
+<!-- Conclusion -->
+</div>
+
+<script src="js/impress.js"></script>
+<script> impress().init(); </script>
+</body>
+</html>
