@@ -1,2 +1,0 @@
-env = "development"
-public_key = "~/.ssh/id_rsa_do.pub"
