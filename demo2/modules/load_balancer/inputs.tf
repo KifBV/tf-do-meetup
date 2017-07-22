@@ -1,8 +1,9 @@
-variable "env"      { }
-variable "region"   { }
-variable "ssh_keys" { type = "list" }
-variable "name"     { }
-variable "image"    { }
+variable "env"         { }
+variable "region"      { }
+variable "ssh_keys"    { type = "list" }
+variable "name"        { }
+variable "image"       { }
+variable "droplet_tag" { }
 
 variable "bootstrap" {
   default = "bootstrap.sh"

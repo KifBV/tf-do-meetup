@@ -1,4 +1,7 @@
-# Create a DO load balancer
+#################
+# LOAD BALANCER #
+#################
+
 resource "digitalocean_loadbalancer" "mod" {
   name = "${var.name}-${var.env}-load-balancer"
   region = "${var.region}"
@@ -12,17 +15,24 @@ resource "digitalocean_loadbalancer" "mod" {
   }
 
   healthcheck {
-    # use the following when starting/developping
+    # use 22/tcp when starting/developping
     #port = 22
     #protocol = "tcp"
     port = 80
     protocol = "http"
+    path = "/index.html"
   }
 
-  droplet_ids = ["${digitalocean_droplet.mod.*.id}"]
+  droplet_tag = "${var.droplet_tag}"
+  # can use droplet ids too but the tag will allow for new Droplets to be
+  # registered automatically
+  #droplet_ids = ["${digitalocean_droplet.mod.*.id}"]
 }
 
-# Create Droplets to be part of the load-balanced fleet
+############
+# DROPLETS #
+############
+
 resource "digitalocean_droplet" "mod" {
   count      = "${var.count}"
   image      = "${var.image}"
@@ -30,7 +40,7 @@ resource "digitalocean_droplet" "mod" {
   region     = "${var.region}"
   size       = "${var.size}"
   ssh_keys   = ["${var.ssh_keys}"]
-  tags       = ["${digitalocean_tag.env.id}","${digitalocean_tag.info.id}"]
+  tags       = ["${digitalocean_tag.env.id}","${digitalocean_tag.info.id}", "${digitalocean_tag.lb.id}"]
   user_data  = "${var.user_data}"
   #volume_ids = ["${split(",", var.volume_ids)}"]
 
@@ -59,10 +69,18 @@ resource "digitalocean_droplet" "mod" {
   }
 }
 
+########
+# TAGS #
+########
+
 resource "digitalocean_tag" "env" {
   name = "${var.env}"
 }
 
 resource "digitalocean_tag" "info" {
   name = "terraform_managed"
+}
+
+resource "digitalocean_tag" "lb" {
+  name = "${var.droplet_tag}"
 }

@@ -8,18 +8,20 @@ variable "public_keys"   { }
 variable "droplet_count" { }
 variable "region"        { }
 variable "image"         { }
+variable "droplet_tag"   { }
 
 # RESOURCES
 
 # we want a load balancer with certain characteristics
 module "load_balancer" {
-  source   = "../../modules/load_balancer"
-  name     = "demo1"
-  count    = "${var.droplet_count}"
-  env      = "${var.env}"
-  region   = "${var.region}"
-  ssh_keys = ["${module.ssh_key.fingerprints}"]
-  image    = "${var.image}"
+  source      = "../../modules/load_balancer"
+  name        = "demo1"
+  count       = "${var.droplet_count}"
+  env         = "${var.env}"
+  region      = "${var.region}"
+  ssh_keys    = ["${module.ssh_key.fingerprints}"]
+  image       = "${var.image}"
+  droplet_tag = "${var.droplet_tag}"
 }
 
 # this time we add multiple ssh keys (see terraform.tfvars)
