@@ -1,13 +1,14 @@
 This demo presents a basic Terraform configuration.
-### Initialise your Terraform configuration
+### Initialise the configuration
 * export your Digital Ocean Token: `export DO_TOKEN=<your_token>`
 * initialise Terraform: `terraform init`
 ### Create the infrastructure
 * prepare the execution plan: `terraform plan -var "do_token=$DO_TOKEN"`
 * create the resources: `terraform apply -var "do_token=$DO_TOKEN"`
 * once the resources have been created, grab the Droplet IP and check you can login: `ssh root@<droplet_ip>`
-The workflow is then:
+### Modify the infrastructure
 * modify the configuration files
-* check the execution plan with `terraform plan`
-* create the resources with `terraform apply` when you're happy with the plan
+* run a `plan` to check the changes that would occur and run an `apply` when you're happy with these changes
 * repeat
+### Destroy the infrastructure
+* delete all resources created by Terraform with `terrafom destroy -var "do_token=$DO_TOKEN"`
