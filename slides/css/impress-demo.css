@@ -106,7 +106,7 @@ i, em { font-style: italic }
     ... and give links a nice look.
 */
 a {
-    color: inherit;
+    color: blue;
     text-decoration: none;
     padding: 0 0.1em;
     background: rgba(255,255,255,0.5);
@@ -178,7 +178,7 @@ a:focus {
     box-sizing:         border-box;
 
     font-family: 'PT Serif', georgia, serif;
-    font-size: 40px;
+    font-size: 44px;
     line-height: 1.5;
 }
 

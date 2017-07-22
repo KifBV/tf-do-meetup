@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-<link href="css/impress-demo.css" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
+	<link href="css/impress-demo.css" rel="stylesheet" />
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata:400,700" rel="stylesheet">
 </head>
 <body>
 
@@ -10,41 +10,42 @@
 
 <!-- Title -->
 <div class="step box" data-x="0" data-y="0" data-scale="3">
-<h1 style="text-align:center">Infrastructure as Code with<br/>Terraform and Digital Ocean</h1>
-<h5 style="text-align:center;color:blue"><a href="https://github.com/kifbv/tf-do-meetup/">github.com/kifbv/tf-do-meetup</a></h5>
-<h6 style="text-align:center">DO Meetup, Bucharest - 24/07/2017</h6>
-<h6 style="text-align:center"><a href="https://www.linkedin.com/in/franckratier/">Franck Ratier</a></h5>
+	<h1 style="text-align:center">Infrastructure as Code with<br/>Terraform and Digital Ocean</h1>
+	<h5 style="text-align:center;color:blue"><a href="https://github.com/kifbv/tf-do-meetup/">github.com/kifbv/tf-do-meetup</a></h5>
+	<h6 style="text-align:center">DO Meetup, Bucharest - 24/07/2017</h6>
+	<h6 style="text-align:center"><a href="https://www.linkedin.com/in/franckratier/">Franck Ratier</a></h5>
 </div>
 
 <!-- First part: Terraform intro -->
 <div class="step" data-x="0" data-y="2000" data-z="2000" data-rotate-x="90">
-<ul>
-	<li>Terraform vocabulary and concepts</li>
-	<li>demo1: single Droplet</li>
-	<li>demo2: load balancer</li>
-	<li>Going forward</li>
-</ul>
+	<p>Agenda:</p>
+	<ul>
+		<li>Terraform vocabulary and concepts</li>
+		<li>demo1: single Droplet</li>
+		<li>demo2: load balancer</li>
+		<li>Going forward</li>
+	</ul>
 </div>
 
 <!-- Why Terraform (config as text, declarative, easy to read, write, version control, audit)-->
 <div class="step" data-x="1500" data-y="2000" data-z="2000" data-rotate-x="90">
 	<ul>
-<li>Configuration in text files</li>
-<li>Declarative</li>
-<li>Uses Digital Ocean's API</li>
-<li>Easy to share/audit (GIT)</li>
+		<li>Configuration in text files</li>
+		<li>Declarative</li>
+		<li>Uses the provider's API (do, aws, github,...)</li>
+		<li>Easy to share/audit (GIT)</li>
 	</ul>
 </div>
 
 <!-- Write -->
 <div class="step" data-x="3000" data-y="2000" data-z="2000" data-rotate-x="90">
-<p>A Terraform configuration is mainly based on:
-<ul>
-	<li><a>.tf</a> files: declare resources, providers, variables,...</li>
-	<li><a>.tfvars</a> files: define variables</li>
-	<li><a>.tfstate</a> files: store state about our managed infrastructure and configuration</li>
-</ul>
-<p>The <a>state</a> file is created and managed by Terraform and we can inspect/modify it with Terraform CLI commands.
+	<p>A Terraform configuration is mainly based on:
+	<ul>
+		<li><a>.tf</a> files: declare resources, providers, variables,...</li>
+		<li><a>.tfvars</a> files: define variables</li>
+		<li><a>.tfstate</a> files: store state about our managed infrastructure and configuration</li>
+	</ul>
+	<p>The <a>state</a> file is created and managed by Terraform and we can inspect/modify it with Terraform CLI commands.
 </div>
 
 <!-- Plan ((written) config, (recorded) state, (existing) infra) -->
@@ -61,63 +62,96 @@
 
 <!-- Apply (create, update, delete) -->
 <div class="step" data-x="6000" data-y="2000" data-z="2000" data-rotate-x="90">
-	<p>Based on that execution plan, Terraform creates resources and updates its knowledge of the infrastructure in the <a>state file</a>.</p>
-	<p>Terraform knows what <a>dependencies</a> exist between resources and creates them in the correct order.</p>
+	<p>Based on the <a>execution plan</a>, Terraform creates resources and updates its knowledge of the infrastructure in the <a>state file</a>.</p>
+		</br>
+	<p>Terraform knows what <a>dependencies</a> exist between <a>resources</a> and creates them in the correct order.</p>
 	<p>(note:add output from apply)</p>
 </div>
 	
 <!-- Second part: demo one, single droplet -->
 <div class="step" data-x="0" data-y="2000" data-z="3000" data-rotate-x="90">
 	<p>A basic Terraform configuration includes:</p>
-<ul>
-	<li><a>providers</a>: to understand API interactions and expose resources</li>
-	<li><a>variables</a>: to parameterise the configuration</li>
-	<li><a>resources</a>: to declare the components of the infrastructure</li>
-</ul>
+	<ul>
+		<li><a>providers</a>: to understand API interactions and expose resources</li>
+		<li><a>variables</a>: to parameterise the configuration</li>
+		<li><a>resources</a>: to declare the components of the infrastructure</li>
+	</ul>
 </div>
 
 <div class="step" data-x="1500" data-y="2000" data-z="3000" data-rotate-x="90">
-<p style="text-align:right;">a provider needs credentials</p>
-<div class="code">provider "digitalocean" {
+	<div class="code"># A <a>provider</a> usually needs credentials. Also, the version can be (and should
+# be) pinned with Terraform v0.10 and above. If you remove that option from the
+# provider block and run 'terraform init', this is what Terraform will suggest.
+
+<a style="display:block;">provider "digitalocean" {
   token   = "${var.do_token}"
   version = "~> 0.1"
-}</div>
+}</a></div>
 </div>
 
 <div class="step" data-x="3000" data-y="2000" data-z="3000" data-rotate-x="90">
-<p style="text-align:right">variables in .tf files</p>
-<div class="code">variable "do_token" { }
-variable "ssh_key"  { default = "~/.ssh/id_rsa_do.pub" }
-variable "vm_size"  { default = "512mb" }</div>
-<p style="text-align:right">variables in .tfvars files</p>
-<div class="code">ssh_key = "~/.ssh/id_rsa_do.pub"
-vm_size = "512mb"</div>
+	<p style="text-align:right">variables in .tf files</p>
+	<div class="code"># Set the token value using <i>-var "do_token=&lt;token&gt;"</i> as a CLI option (using e.g.
+# an environment variable or shell expansion).
+# Do not expose your token in plain text here!
+
+<a>variable "do_token" { }</a>
+
+# Location of my public key for DO Droplets. It has a default value that can be
+# overwritten in terraform.tfvars or at the CLI if necessary.
+
+<a>variable "ssh_key"  { default = "~/.ssh/id_rsa_do.pub" }</a>
+
+# We also declare a variable for the Droplet size. Its value is set in
+# terraform.tfvars but again, we can overwrite it at the CLI (try to add <i>-var
+# droplet_size="1gb"</i> to the terraform plan command).
+
+<a>variable "droplet_size"  { }</a> </div>
 </div>
 
 <div class="step" data-x="4500" data-y="2000" data-z="3000" data-rotate-x="90">
-<div class="code">resource "digitalocean_droplet" "vm1" {
-  image    = "ubuntu-16-04-x64"
-  name     = "demo1"
-  region   = "fra1"
-  size     = "${var.vm_size}"
-  ssh_keys = ["${digitalocean_ssh_key.default.fingerprint}"]
-}
+	<p style="text-align:right">variables in .tfvars files</p>
+	<div class="code"># Variables in terraform.tfvars in the Terraform root directory will be loaded
+# automatically.
+# To load a file with a different name, use the <i>-var-file &lt;file_name&gt;</i> CLI
+# option.
 
-resource "digitalocean_ssh_key" "default" {
-  name       = "default-key"
-  public_key = "${file(var.ssh_key)}"
-}</div>
+<a>droplet_size = "512mb"</a></div>
 </div>
 
 <div class="step" data-x="6000" data-y="2000" data-z="3000" data-rotate-x="90">
-<div class="code">export DO_TOKEN=&lt;YOUR_TOKEN&gt;
-terraform plan -var do_token=$DO_TOKEN
-terraform apply -var do_token=$DO_TOKEN
-</div>
-<p>Terraform will figure out what resources we want (<a>plan</a>) and create these resources with the provider (<a>apply</a>)</p>
+	<div class="code"># Some <a>arguments</a> are required, others are optional (see the provider's docs). The
+# value for the 'ssh_keys' argument is the 'fingerprint' <a>attribute</a> of the
+# 'digitalocean_ssh_key' resource.
+
+<a style="display:block;">resource "digitalocean_droplet" "vm1" {
+  image    = "ubuntu-16-04-x64"
+  name     = "demo1"
+  region   = "fra1"
+  size     = "${var.droplet_size}"
+  ssh_keys = ["${digitalocean_ssh_key.default.fingerprint}"]
+}</a>
+
+# Terraform also provides useful interpolations. Here we get the value for the
+# 'public_key' variable from the content of a file.
+
+<a style="display:block;">resource "digitalocean_ssh_key" "default" {
+  name       = "default-key"
+  public_key = "${file(var.ssh_key)}"
+}</a> </div>
 </div>
 
 <div class="step" data-x="7500" data-y="2000" data-z="3000" data-rotate-x="90">
+	<div class="code">export DO_TOKEN=&lt;YOUR_TOKEN&gt;
+terraform <a>init</a>
+terraform <a>plan</a> -var do_token=$DO_TOKEN
+terraform <a>apply</a> -var do_token=$DO_TOKEN </div>
+		<p><a>init</a>: download the providers</p>
+		<p><a>plan</a>: create the execution plan (i.e. figure out the resources we want to create)</p>
+		<p><a>apply</a>: create the resources using the provider's API</p>
+</div>
+
+<div class="step" data-x="9000" data-y="2000" data-z="3000" data-rotate-x="90">
 	<p>Problems so far:
 	<ul>
 		<li>everything in one file</li>
