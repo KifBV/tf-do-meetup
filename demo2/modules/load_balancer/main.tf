@@ -47,7 +47,7 @@ resource "digitalocean_droplet" "mod" {
   provisioner "file" {
     source      = "${path.module}/files/${var.bootstrap}"
     destination = "/tmp/${var.bootstrap}"
-    # added for clarity
+    # connection details are defaults but i added them for clarity
     connection {
       type = "ssh"
       user = "root"
@@ -60,7 +60,7 @@ resource "digitalocean_droplet" "mod" {
       "chmod +x /tmp/${var.bootstrap}",
       "/tmp/${var.bootstrap}",
     ]
-    # added for clarity
+    # same as above
     connection {
       type = "ssh"
       user = "root"
