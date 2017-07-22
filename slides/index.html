@@ -23,23 +23,28 @@
 	<li>demo1: single Droplet</li>
 	<li>demo2: load balancer</li>
 	<li>Going forward</li>
+</ul>
 </div>
 
 <!-- Why Terraform (config as text, declarative, easy to read, write, version control, audit)-->
 <div class="step" data-x="1500" data-y="2000" data-z="2000" data-rotate-x="90">
-<p>Infrastructure is represented in text files</p>
-<p>These files declare each component of the infrastructure</p>
-<p>Easy to read/write/audit</p>
+	<ul>
+<li>Configuration in text files</li>
+<li>Declarative</li>
+<li>Uses Digital Ocean's API</li>
+<li>Easy to share/audit (GIT)</li>
+	</ul>
 </div>
 
 <!-- Write -->
 <div class="step" data-x="3000" data-y="2000" data-z="2000" data-rotate-x="90">
-<p>Because it is text based, Terraform infrastructure is:</p>
+<p>A Terraform configuration is mainly based on:
 <ul>
-<li>easy to read/write</li>
-<li>can be version controlled</li>
-<li>easy to re-use</li>
+	<li><a>.tf</a> files: declare resources, providers, variables,...</li>
+	<li><a>.tfvars</a> files: define variables</li>
+	<li><a>.tfstate</a> files: store state about our managed infrastructure and configuration</li>
 </ul>
+<p>The <a>state</a> file is created and managed by Terraform and we can inspect/modify it with Terraform CLI commands.
 </div>
 
 <!-- Plan ((written) config, (recorded) state, (existing) infra) -->
@@ -51,13 +56,14 @@
 		<li>the <a>existing infrastructure</a></li>
 	</ul>
 	<p>and creates an <a>execution plan</a> (+ - ~)
-	add output from plan
+	<p>(note:add output from plan)</p>
 </div>
 
 <!-- Apply (create, update, delete) -->
 <div class="step" data-x="6000" data-y="2000" data-z="2000" data-rotate-x="90">
 	<p>Based on that execution plan, Terraform creates resources and updates its knowledge of the infrastructure in the <a>state file</a>.</p>
 	<p>Terraform knows what <a>dependencies</a> exist between resources and creates them in the correct order.</p>
+	<p>(note:add output from apply)</p>
 </div>
 	
 <!-- Second part: demo one, single droplet -->
@@ -108,13 +114,13 @@ resource "digitalocean_ssh_key" "default" {
 terraform plan -var do_token=$DO_TOKEN
 terraform apply -var do_token=$DO_TOKEN
 </div>
-<p>Terraform will figure out what resources we want (plan) and create these resources with the provider (apply)</p>
+<p>Terraform will figure out what resources we want (<a>plan</a>) and create these resources with the provider (<a>apply</a>)</p>
 </div>
 
 <div class="step" data-x="7500" data-y="2000" data-z="3000" data-rotate-x="90">
-	<p>Two problems so far:
+	<p>Problems so far:
 	<ul>
-		<li>everything in one big file</li>
+		<li>everything in one file</li>
 		<li>single environment</li>
 	</ul>
 <!-- Third part: demo one, single droplet -->
