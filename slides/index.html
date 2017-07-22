@@ -22,7 +22,7 @@
 	<li>Terraform vocabulary and concepts</li>
 	<li>demo1: single Droplet</li>
 	<li>demo2: load balancer</li>
-	<li>demo3: Nomad scheduler</li>
+	<li>Going forward</li>
 </div>
 
 <!-- Why Terraform (config as text, declarative, easy to read, write, version control, audit)-->
@@ -41,17 +41,24 @@
 <li>easy to re-use</li>
 </ul>
 </div>
+
 <!-- Plan ((written) config, (recorded) state, (existing) infra) -->
 <div class="step" data-x="4500" data-y="2000" data-z="2000" data-rotate-x="90">
-	<p>Terraform compares:</p>
+	<p>Terraform looks at:</p>
 	<ul>
 		<li>the <a>desired state</a> declared in the configuration files (.tf files)</li>
-		<li>the <a>actual state</a> it is aware of (.tfstate files)</li>
+		<li>the <a>actual state</a> it is aware of (terraform.tfstate)</li>
 		<li>the <a>existing infrastructure</a></li>
 	</ul>
-	<p>and creates an execution plan (+ - ~)
+	<p>and creates an <a>execution plan</a> (+ - ~)
+	add output from plan
 </div>
+
 <!-- Apply (create, update, delete) -->
+<div class="step" data-x="6000" data-y="2000" data-z="2000" data-rotate-x="90">
+	<p>Based on that execution plan, Terraform creates resources and updates its knowledge of the infrastructure in the <a>state file</a>.</p>
+	<p>Terraform knows what <a>dependencies</a> exist between resources and creates them in the correct order.</p>
+</div>
 	
 <!-- Second part: demo one, single droplet -->
 <div class="step" data-x="0" data-y="2000" data-z="3000" data-rotate-x="90">
@@ -97,10 +104,11 @@ resource "digitalocean_ssh_key" "default" {
 </div>
 
 <div class="step" data-x="6000" data-y="2000" data-z="3000" data-rotate-x="90">
-<div class="code">terraform plan -var do_token=&lt;YOUR_TOKEN&gt;
-terraform apply -var do_token=&lt;YOUR_TOKEN&gt;
+<div class="code">export DO_TOKEN=&lt;YOUR_TOKEN&gt;
+terraform plan -var do_token=$DO_TOKEN
+terraform apply -var do_token=$DO_TOKEN
 </div>
-<p>Terraform will figure out what resources we need (plan) and create these resources with the provider (apply)</p>
+<p>Terraform will figure out what resources we want (plan) and create these resources with the provider (apply)</p>
 </div>
 
 <div class="step" data-x="7500" data-y="2000" data-z="3000" data-rotate-x="90">
