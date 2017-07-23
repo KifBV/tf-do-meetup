@@ -8,15 +8,8 @@ jobs:
       - checkout
 
       - run:
-          working_directory: ~/repo/demo3
-          name: Config test
+          working_directory: ~/repo/tf-do-meetup/demo3
+          name: Terraform
           command: |
-            ls -la . ..
-        
-#      - run:
-#          working_directory: ~/repo/tf-do-meetup/demo3
-#          name: terraform
-#          command: |
-#            terraform init
-#            terraform plan && terraform apply
-        
+            terraform init
+            terraform plan && terraform apply
