@@ -91,8 +91,8 @@
 
 <div class="step" data-x="3000" data-y="2000" data-z="3000" data-rotate-x="90">
 	<p style="text-align:right">variables in .tf files</p>
-	<div class="code"># Set the token value using <i>-var "do_token=&lt;token&gt;"</i> as a CLI option (using e.g.
-# an environment variable or shell expansion).
+	<div class="code"># Set the token value using <i>-var "do_token=&lt;token&gt;"</i> as a CLI option or using
+# an environment variable.
 # Do not expose your token in plain text here!
 
 <a>variable "do_token" { }</a>
@@ -142,10 +142,10 @@
 </div>
 
 <div class="step" data-x="7500" data-y="2000" data-z="3000" data-rotate-x="90">
-	<div class="code">export DO_TOKEN=&lt;YOUR_TOKEN&gt;
+	<div class="code">export TF_VAR_do_token=&lt;YOUR_TOKEN&gt;
 terraform <a>init</a>
-terraform <a>plan</a> -var do_token=$DO_TOKEN
-terraform <a>apply</a> -var do_token=$DO_TOKEN </div>
+terraform <a>plan</a>
+terraform <a>apply</a></div>
 		<p><a>init</a>: download the providers</p>
 		<p><a>plan</a>: create the execution plan (i.e. figure out the resources we want to create)</p>
 		<p><a>apply</a>: create the resources using the provider's API</p>
