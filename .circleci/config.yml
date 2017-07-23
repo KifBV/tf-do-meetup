@@ -8,7 +8,7 @@ jobs:
       - checkout
 
       - run:
-          working_directory: ~/repo/tf-do-meetup/demo3
+          working_directory: ~/repo/demo3
           name: Config test
           command: |
             ls -la . ..
