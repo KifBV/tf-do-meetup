@@ -1,4 +1,4 @@
-This demo presents a basic Terraform configuration.
+This demo creates a **single Droplet** to illustrate a basic Terraform configuration.
 ### Initialise the configuration
 * export your Digital Ocean Token: `export TF_VAR_do_token=<your_token>`
 * initialise Terraform: `terraform init`
