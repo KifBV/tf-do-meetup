@@ -1,4 +1,8 @@
 This demo creates a **Digital Ocean domain** to illustrate team collaboration and CI/CD workflow with Terraform.
+
+You'll need a fork of this repo so you can push to it.
+### Update the `terraform.tf` file
+Change the `bucket` and `region` values according to your own AWS account.
 ### Configure Circle CI
 * Register the repo with Circle CI
 * Run the first build (it will fail but we can't setup environment variables if we don't complete this step)
