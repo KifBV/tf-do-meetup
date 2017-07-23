@@ -4,12 +4,21 @@ jobs:
   build:
     machine: true
     working_directory: ~/repo
+    environment:
+      - TF_VERSION: "0.10.0-rc1"
     steps:
       - checkout
 
       - run:
-          working_directory: ~/repo/tf-do-meetup/demo3
-          name: Terraform
+          working_directory: ~/repo/demo3
+          name: Install Terraform
           command: |
-            terraform init
-            terraform plan && terraform apply
+            wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+            unzip terraform_${TF_VERSION}_linux_amd64.zip
+
+      - run:
+          working_directory: ~/repo/demo3
+          name: Run Terraform
+          command: |
+            ./terraform init
+            ./terraform plan && ./terraform apply
