@@ -1,7 +1,8 @@
-This demo illustrates Terraform modules, variable interpolations, and managing multiple environments.
-### How to run the demo
-* change directory to the development environment: `cd environment/dev`
-* export your Digital Ocean Token: `export DO_TOKEN=<your_token>`
-* plan the Terraform configuration: `terraform plan -var "do_token=$DO_TOKEN"`
-* create the resources: `terraform apply -var "do_token=$DO_TOKEN"`
-* once the resources have been created, cURL the load-balancer IP and check that you get replies from all Droplets: `for i in {1..10}; do curl <load_balancer_ip>; done`
+Register the repo with Circle CI
+
+Setup the following environment variables in Circle CI:
+* TF_VAR_do_token=<your_do_token>
+* TF_VAR_ACCESS_KEY=<your_aws_access_key_id>
+* TF_VAR_SECRET_KEY=<your_aws_secret_access_key>
+
+Modify the Terraform configuration and `git push` to deploy your changes.

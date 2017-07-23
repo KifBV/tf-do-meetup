@@ -1,0 +1,15 @@
+version: 2
+
+jobs:
+  build:
+    machine: true
+    working_directory: ~/tf-do-meetup
+    steps:
+      - checkout
+
+      - run:
+          working_directory: $CIRCLE_WORKING_DIRECTORY/demo3
+          command: |
+            terraform init
+            terraform plan && terraform apply
+        
