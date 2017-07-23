@@ -1,6 +1,6 @@
 Digital Ocean Meetup, Bucharest - 24/07/2017
 ## Pre-requisites
-* Terraform v0.10 (download it [here](https://releases.hashicorp.com/terraform/0.10.0-rc1/), unzip and move the binary to `/usr/local/bin` or somewhere else in your `$PATH`)
+* Terraform v0.10.0-rc1 (download it [here](https://releases.hashicorp.com/terraform/0.10.0-rc1/), unzip and move the binary to `/usr/local/bin` or somewhere else in your `$PATH`)
 * Digital Ocean API Token (create and download one from the [API page](https://cloud.digitalocean.com/settings/api/tokens) of your Digital Ocean profile)
 
 ## Slides

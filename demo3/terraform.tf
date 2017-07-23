@@ -3,14 +3,12 @@
 #############
 
 provider "digitalocean" {
-  token   = "${var.do_token}"
   version = "~> 0.1"
 }
 
 provider "aws" {
-  #access_key = "${var.aws_access_key}"
-  #secret_key = "${var.aws_secret_key}"
   region     = "eu-west-1"
+  version = "~> 0.1"
 }
 
 ###########
@@ -39,5 +37,5 @@ variable "do_token"       { }
 
 resource "digitalocean_domain" "default" {
   name       = "franck.live"
-  ip_address = "10.0.0.10"
+  ip_address = "10.0.0.15"
 }

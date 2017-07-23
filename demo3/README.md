@@ -1,10 +1,11 @@
 This demo creates a **Digital Ocean domain** to illustrate team collaboration and CI/CD workflow with Terraform.
 ### Configure Circle CI
 * Register the repo with Circle CI
+* Run the first build (it will fail but we can't setup environment variables if we don't complete this step)
 * Setup the following environment variables in Circle CI:
-  * `TF_VAR_do_token=<your_do_token>`
-  * `TF_VAR_ACCESS_KEY=<your_aws_access_key_id>`
-  * `TF_VAR_SECRET_KEY=<your_aws_secret_access_key>`
+  * `DIGITALOCEAN_TOKEN=<your_do_token>`
+  * `AWS_ACCESS_KEY_ID=<your_aws_access_key_id>`
+  * `AWS_SECRET_ACCESS_KEY=<your_aws_secret_access_key>`
 ### Create the infrastructure
 Start by pushing an empty commit with: `git commit --allow-empty && git push`.
 

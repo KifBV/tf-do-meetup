@@ -2,12 +2,13 @@
 # PROVIDERS #
 #############
 
-# A provider usually needs credentials. Also, the version can be (and should
-# be) pinned with Terraform v0.10 and above. If you remove that option from the
-# provider block and run 'terraform init', this is what Terraform will suggest.
+# A provider usually needs credentials. Here, we use the DIGITALOCEAN_TOKEN
+# environment variable which is used in last resort.  Also, the version can be
+# (and should be) pinned with Terraform v0.10 and above. If you remove that
+# option from the provider block and run 'terraform init', this is what
+# Terraform will suggest.
 
 provider "digitalocean" {
-  token   = "${var.do_token}"
   version = "~> 0.1"
 }
 
