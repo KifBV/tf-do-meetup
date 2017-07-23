@@ -4,7 +4,7 @@ jobs:
     machine: true
     working_directory: ~/repo
     environment:
-      - TF_VERSION: "terraform_0.10.0-rc1"
+      - TF_VERS: "0.10.0-rc1"
       - TF_ARCH: "linux_amd64"
       - TF_REPO: "https://releases.hashicorp.com/terraform"
     steps:
@@ -13,8 +13,8 @@ jobs:
           working_directory: ~/repo/demo3
           name: Install Terraform
           command: |
-            wget ${TF_REPO}/${TF_VERSION}/${TF_VERSION}_${TF_ARCH}.zip
-            unzip ${TF_VERSION}_${TF_ARCH}.zip
+            wget ${TF_REPO}/${TF_VERS}/terraform_${TF_VERS}_${TF_ARCH}.zip
+            unzip terraform_${TF_VERS}_${TF_ARCH}.zip
       - run:
           working_directory: ~/repo/demo3
           name: Run Terraform
