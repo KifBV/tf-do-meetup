@@ -274,7 +274,15 @@ public_keys = "~/.ssh/id_rsa_do.pub,~/.ssh/id_rsa_github.pub"</div>
 </div>
 
 <div class="step" data-x="1500" data-y="2000" data-z="5000" data-rotate-x="90">
-	<p>Also, in order to avoid conflicts or discrepancies in planning/applying we'll introduce a CI/CD workflow.
+	<p>Also, in order to avoid conflicts or discrepancies when team members will be planning/applying Terraform configurations, we'll introduce a CI/CD setup with Circle CI.
+	<div class="code">  GitHub  +------>  Circle CI <------------------->  AWS S3
+     ^      hook        ^       remote state mgmt
+     |                  |
+     | git push         |
+     |                  | terraform plan/apply...
+     +                  +------------------------->  Digital Ocean
+Dev1...DevN
+</div>
 </div>
 <!-- Conclusion -->
 
