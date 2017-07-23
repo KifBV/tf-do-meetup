@@ -50,3 +50,11 @@ resource "digitalocean_ssh_key" "default" {
   name       = "default-key"
   public_key = "${file(var.ssh_key)}"
 }
+
+###########
+# OUTPUTS #
+###########
+
+output "Droplet IP" {
+  value = "${digitalocean_droplet.vm1.ipv4_address}"
+}

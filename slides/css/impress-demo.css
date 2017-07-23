@@ -57,8 +57,13 @@ footer, header, hgroup, menu, nav, section {
 body {
     line-height: 1;
 }
-ol, ul {
-    /*list-style: none;*/
+ol {
+    list-style-type: decimal;
+    position: relative;
+    left: 100px;
+}
+ul {
+    list-style-type: disc;
     position: relative;
     left: 100px;
 }
@@ -189,7 +194,7 @@ a:focus {
 	color: green;
 	background: black;
 	white-space:pre;
-    	padding: 40px;
+    	padding: 20px;
     	margin: 20px auto;
     	line-height: 1.1;
 }

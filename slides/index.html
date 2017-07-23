@@ -13,7 +13,7 @@
 	<h1 style="text-align:center">Infrastructure as Code with<br/>Terraform and Digital Ocean</h1>
 	<h5 style="text-align:center;color:blue"><a href="https://github.com/kifbv/tf-do-meetup/">github.com/kifbv/tf-do-meetup</a></h5>
 	<h6 style="text-align:center">DO Meetup, Bucharest - 24/07/2017</h6>
-	<h6 style="text-align:center"><a href="https://www.linkedin.com/in/franckratier/">Franck Ratier</a></h5>
+	<h6 style="text-align:center">franck ratier / message me on <a href="https://www.linkedin.com/in/franckratier/" target="_blank">LinkedIn</a> or <a href="https://www.meetup.com/DigitalOceanBucharest/members/225801679/" target="_blank">Meetup</a>!</h5>
 </div>
 
 <!-- First part: Terraform intro -->
@@ -21,20 +21,22 @@
 	<p>Agenda:</p>
 	<ul>
 		<li>Terraform vocabulary and concepts</li>
-		<li>demo1: basic Terraform usage (providers, resources, variables)</li>
-		<li>demo2: more advanced usage (multiple environments, count, modules, github sources)</li>
-		<li>demo3: collaborative usage and CI/CD workflow (remote state, GitHub, Circle CI)</li>
-		<li>Going forward</li>
+		<li>demo1: basic Terraform usage </br>(providers, resources, variables)</li>
+		<li>demo2: more advanced usage </br>(environments, count, modules, GitHub sources)</li>
+		<li>demo3: collaboration and CI/CD workflow </br>(remote state, GitHub, Circle CI)</li>
+		<li>Links</li>
 	</ul>
 </div>
 
 <!-- Why Terraform (config as text, declarative, easy to read, write, version control, audit)-->
 <div class="step" data-x="1500" data-y="2000" data-z="2000" data-rotate-x="90">
 	<ul>
+		<li>One binary for Terraform + one for each provider</li>
 		<li>Configuration in text files</li>
 		<li>Declarative</li>
-		<li>Uses the provider's API (do, aws, github,...)</li>
-		<li>Easy to share/audit (GIT)</li>
+		<li>Dependency aware</li>
+		<li>Uses the provider's API (DO, AWS, GitHub,...)</li>
+		<li>Easy to share/audit (Git)</li>
 	</ul>
 </div>
 
@@ -46,7 +48,7 @@
 		<li><a>.tfvars</a> files: define variables</li>
 		<li><a>.tfstate</a> files: store state about our managed infrastructure and configuration</li>
 	</ul>
-	<p>The <a>state</a> file is created and managed by Terraform and we can inspect/modify it with Terraform CLI commands.
+	<p>The <a>state</a> file is created and managed by Terraform although we can inspect/modify it with Terraform CLI commands.
 </div>
 
 <!-- Plan ((written) config, (recorded) state, (existing) infra) -->
@@ -63,7 +65,7 @@
 
 <!-- Apply (create, update, delete) -->
 <div class="step" data-x="6000" data-y="2000" data-z="2000" data-rotate-x="90">
-	<p>Based on the <a>execution plan</a>, Terraform creates resources and updates its knowledge of the infrastructure in the <a>state file</a>.</p>
+	<p>Based on the <a>execution plan</a>, Terraform creates/modifies/deletes resources and updates its knowledge of the infrastructure in the <a>state file</a>.</p>
 		</br>
 	<p>Terraform knows what <a>dependencies</a> exist between <a>resources</a> and creates them in the correct order.</p>
 	<p>(note:add output from apply)</p>
@@ -150,13 +152,131 @@ terraform <a>apply</a></div>
 <div class="step" data-x="9000" data-y="2000" data-z="3000" data-rotate-x="90">
 	<p>We've created our first resources with Terraform but:
 	<ul>
-		<li>the whole configuration is in one file</li>
+		<li>how to avoid repeating ourselves if we want e.g. 100 Droplets?</li>
 		<li>how do we manage multiple environments?</li>
 		<li>how do we collaborate?</li>
+		<li>how do we automate our workflow?</li>
 	</ul>
-<!-- Third part: demo one, single droplet -->
-<!-- Conclusion -->
 </div>
+
+<!-- Third part: demo two, load balancer -->
+<div class="step" data-x="0" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p>There are multiple ways of organising our code to accomodate multiple separate environments.</p></br>
+	<p>Here we will make use of <a>modules</a> and put the configuration files in separate folders.</p></br>
+	<P>Other possibilities exist, like separating by branch (prod/dev) or using terraform workspaces.</p>
+</div>
+
+<div class="step" data-x="1500" data-y="2000" data-z="4000" data-rotate-x="90">
+	<div class="code">.
+├── environment
+│   ├── dev
+│   │   ├── terraform.tf
+│   │   └── terraform.tfvars
+│   └── prod
+│       ├── terraform.tf
+│       └── terraform.tfvars
+└── modules
+    ├── load_balancer
+    │   ├── files
+    │   │   └── bootstrap.sh
+    │   ├── inputs.tf
+    │   ├── main.tf
+    │   └── outputs.tf
+    └── ssh_key
+        ├── inputs.tf
+        ├── main.tf
+        └── outputs.tf</div>
+</div>
+
+<div class="step" data-x="3000" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p>We now have 2 Terraform root directories:</p>
+	<ul>
+		<li>environment/dev/</li>
+		<li>environment/prod/</li>
+	</ul>
+	</br>
+	<p>Benefits:</p>
+	<ul>
+		<li><a>different variables</a> per environment</li>
+		<li><a>separate state files</a> per environment</li>
+	</ul>
+	</br>
+	<p>The 2 terraform.tf files will probably start identical but they can evolve differently (e.g. maybe we just need a bastion host in the prod one).</p>
+</div>
+
+<div class="step" data-x="4500" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p>We've solved the multiple environments problems.</p>
+	<p>To avoid repeating ourselves, we will make use of <a>modules</a> and the <a>count</a> meta-parameter.</p>
+</div>
+
+<div class="step" data-x="6000" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p style="text-align:right;font-size:24px">demo2/environment/dev/terraform.tf</p>
+	<div class="code">module "ssh_key" {
+  #source      = "../../modules/ssh_key"
+  source   = "github.com/KifBV/tf-do-meetup//demo2/modules/ssh_key"
+  <a>env         = "${var.env}"</a>
+  <a>public_keys = "${var.public_keys}"</a>
+}</div>
+	<p style="text-align:right;font-size:24px">demo2/modules/ssh_key/main.tf</p>
+	<div class="code">resource "digitalocean_ssh_key" "mod" {
+  <a>count</a>      = "${length(split(",", var.public_keys))}"
+  name       = "${var.env}-ssh-key-<a>${count.index}</a>"
+  public_key = "${file(element(split(",", var.public_keys), <a>count.index</a>))}"
+}</div>
+	<p style="text-align:right;font-size:24px">demo2/environment/dev/terraform.tfvars</p>
+	<div class="code">env         = "dev"
+public_keys = "~/.ssh/id_rsa_do.pub,~/.ssh/id_rsa_github.pub"</div>
+</div>
+
+<div class="step" data-x="7500" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p><a>Modules</a> allow us to re-use blocks of code, and by sourcing them from GitHub we can re-use them in different projects.</p></br>
+	<p>The <a>count</a> meta-parameter allows us to create multiple resources without repeating resource blocks.</p>
+</div>
+
+<div class="step" data-x="9000" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p>The previous example mixes both <a>modules</a> and <a>count</a>, but here is a simpler example:</p>
+	<div class="code">resource "digitalocean_droplet" "vm1" {
+  <a>count    = 4</a>
+  image    = "ubuntu-16-04-x64"
+  name     = "demo-<a>${count.index}</a>"
+  region   = "fra1"
+  size     = "512mb"
+}</div>
+</div>
+
+<div class="step" data-x="10500" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p>We've created our second set of resources with Terraform and:</p>
+	<ul>
+		<li>we've found ways to avoid repeating ourselves</li>
+		<li>we can manage securely manage separate environments</li>
+	</ul>
+	<p>but:</p>
+	<ul>
+		<li>how do we collaborate?</li>
+		<li>how do we automate our workflow?</li>
+	</ul>
+</div>
+
+<!-- Fourth part: demo three, remote state and CI/CD -->
+<div class="step" data-x="0" data-y="2000" data-z="5000" data-rotate-x="90">
+	<p>Problems with local state and collaboration:
+	<ul>
+		<li>requires strict communication</li>
+		<li>storing the state on GitHub is not ideal</li>
+	</ul>
+	</br>
+	<p>Solution:
+	<ul>
+		<li>we are going to use a <a>remote state</a></li>
+	</ul>
+	</br>
+	<p>Currently Digital Ocean doesn't offer object storage that we could use with Terraform, so we'll use AWS S3 for this.
+</div>
+
+<div class="step" data-x="1500" data-y="2000" data-z="5000" data-rotate-x="90">
+	<p>Also, in order to avoid conflicts or discrepancies in planning/applying we'll introduce a CI/CD workflow.
+</div>
+<!-- Conclusion -->
 
 <script src="js/impress.js"></script>
 <script> impress().init(); </script>
