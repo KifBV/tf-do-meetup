@@ -275,15 +275,65 @@ public_keys = "~/.ssh/id_rsa_do.pub,~/.ssh/id_rsa_github.pub"</div>
 
 <div class="step" data-x="1500" data-y="2000" data-z="5000" data-rotate-x="90">
 	<p>Also, in order to avoid conflicts or discrepancies when team members will be planning/applying Terraform configurations, we'll introduce a CI/CD setup with Circle CI.
-	<div class="code">  GitHub  +------>  Circle CI <------------------->  AWS S3
-     ^      hook        ^       remote state mgmt
-     |                  |
-     | git push         |
-     |                  | terraform plan/apply...
-     +                  +------------------------->  Digital Ocean
-Dev1...DevN
+	<div class="code">  GitHub  +-------------->  Circle CI <------------------->  AWS S3
+     ^          hook            ^       remote state mgmt    (state)
+     |                          |
+     |                          |
+     | git push/pull request    | terraform plan/apply/...
+     |                          | 
+     +                          +------------------------->  Digital Ocean
+Dev1...DevN                                                  (resources)
 </div>
 </div>
+
+<div class="step" data-x="3000" data-y="2000" data-z="5000" data-rotate-x="90">
+	<p style="text-align:right">demo3/terraform.tf</p>
+	<div class="code">provider "digitalocean" {
+  version = "~&gt; 0.1"
+}
+
+provider "aws" {
+  # change the region value according to your own AWS account
+  region     = "eu-west-1"
+  version = "~&gt; 0.1"
+}
+
+terraform {
+  backend "s3" {
+    # change the bucket and region values according to your own AWS account
+    bucket  = "tf-do-meetup"
+    key     = "terraform.tfstate"
+    region  = "eu-west-1"
+    encrypt = "true"
+  }
+}</div>
+</div>
+
+<div class="step" data-x="4500" data-y="2000" data-z="5000" data-rotate-x="90">
+	<p style="text-align:right">.circleci/config.yml</p>
+	<div class="code">version: 2
+jobs:
+  build:
+    machine: true
+    working_directory: ~/repo
+    environment:
+      - TF_VERSION: "0.10.0-rc1"
+    steps:
+      - checkout
+      - run:
+          working_directory: ~/repo/demo3
+          name: Install Terraform
+          command: |
+            wget https://releases.hashicorp.com/terraform/${TF_VERSION}/terraform_${TF_VERSION}_linux_amd64.zip
+            unzip terraform_${TF_VERSION}_linux_amd64.zip
+      - run:
+          working_directory: ~/repo/demo3
+          name: Run Terraform
+          command: |
+            ./terraform init
+	    ./terraform plan && ./terraform apply</div>
+</div>
+
 <!-- Conclusion -->
 
 <script src="js/impress.js"></script>
