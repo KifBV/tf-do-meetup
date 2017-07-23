@@ -3,10 +3,10 @@
 #############
 
 # A provider usually needs credentials. Here, we use the DIGITALOCEAN_TOKEN
-# environment variable which is used in last resort.  Also, the version can be
-# (and should be) pinned with Terraform v0.10 and above. If you remove that
-# option from the provider block and run 'terraform init', this is what
-# Terraform will suggest.
+# environment variable which is automatically sourced by Terraform.  Also, the
+# version can be (and should be) pinned with Terraform v0.10 and above. If you
+# remove that option from the provider block and run 'terraform init', this is
+# what Terraform will suggest.
 
 provider "digitalocean" {
   version = "~> 0.1"
@@ -16,8 +16,8 @@ provider "digitalocean" {
 # VARIABLES #
 #############
 
-# Location of my public key for DO Droplets. It has a default value that can be
-# overwritten in terraform.tfvars or at the CLI if necessary.
+# The location of my public key for DO Droplets. It has a default value that
+# can be overwritten in terraform.tfvars or at the CLI if necessary.
 
 variable "ssh_key"  { default = "~/.ssh/id_rsa_do.pub" }
 

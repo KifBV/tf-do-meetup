@@ -21,8 +21,9 @@
 	<p>Agenda:</p>
 	<ul>
 		<li>Terraform vocabulary and concepts</li>
-		<li>demo1: single Droplet</li>
-		<li>demo2: load balancer</li>
+		<li>demo1: basic Terraform usage (providers, resources, variables)</li>
+		<li>demo2: more advanced usage (multiple environments, count, modules, github sources)</li>
+		<li>demo3: collaborative usage and CI/CD workflow (remote state, GitHub, Circle CI)</li>
 		<li>Going forward</li>
 	</ul>
 </div>
@@ -79,28 +80,23 @@
 </div>
 
 <div class="step" data-x="1500" data-y="2000" data-z="3000" data-rotate-x="90">
-	<div class="code"># A <a>provider</a> usually needs credentials. Also, the version can be (and should
-# be) pinned with Terraform v0.10 and above. If you remove that option from the
-# provider block and run 'terraform init', this is what Terraform will suggest.
+	<div class="code"># A <a>provider</a> usually needs credentials. Here, we use the DIGITALOCEAN_TOKEN
+# environment variable which is automatically sourced by Terraform.  Also, the
+# version can be (and should be) pinned with Terraform v0.10 and above. If you
+# remove that option from the provider block and run 'terraform init', this is
+# what Terraform will suggest.
 
 <a style="display:block;">provider "digitalocean" {
-  token   = "${var.do_token}"
   version = "~> 0.1"
 }</a></div>
 </div>
 
 <div class="step" data-x="3000" data-y="2000" data-z="3000" data-rotate-x="90">
 	<p style="text-align:right">variables in .tf files</p>
-	<div class="code"># Set the token value using <i>-var "do_token=&lt;token&gt;"</i> as a CLI option or using
-# an environment variable.
-# Do not expose your token in plain text here!
+	<div class="code"># The location of my public key for DO Droplets. It has a default value that
+# can be overwritten in terraform.tfvars or at the CLI if necessary.
 
-<a>variable "do_token" { }</a>
-
-# Location of my public key for DO Droplets. It has a default value that can be
-# overwritten in terraform.tfvars or at the CLI if necessary.
-
-<a>variable "ssh_key"  { default = "~/.ssh/id_rsa_do.pub" }</a>
+<a>variable "ssh_key" { default = "~/.ssh/id_rsa_do.pub" }</a>
 
 # We also declare a variable for the Droplet size. Its value is set in
 # terraform.tfvars but again, we can overwrite it at the CLI (try to add <i>-var
