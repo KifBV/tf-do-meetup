@@ -8,11 +8,16 @@ jobs:
       - checkout
 
       - run:
-          working_directory: $CIRCLE_WORKING_DIRECTORY/demo3
+          working_directory: ~/repo/tf-do-meetup/demo3
+          name: Config test
           command: |
             echo "Current directory: $(pwd)"
             echo $TF_VAR_do_token 
-            #command: |
-            #coterraform init
-            #coterraform plan && terraform apply
+        
+#      - run:
+#          working_directory: ~/repo/tf-do-meetup/demo3
+#          name: terraform
+#          command: |
+#            terraform init
+#            terraform plan && terraform apply
         
