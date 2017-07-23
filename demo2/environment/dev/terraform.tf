@@ -1,8 +1,9 @@
-# VARIABLES
+#############
+# VARIABLES #
+#############
 
 # the token value is passed at runtime
 # the other variables are in defined in terraform.tfvars
-variable "do_token"      { }
 variable "env"           { }
 variable "public_keys"   { }
 variable "droplet_count" { }
@@ -10,7 +11,9 @@ variable "region"        { }
 variable "image"         { }
 variable "droplet_tag"   { }
 
-# RESOURCES
+#############
+# RESOURCES #
+#############
 
 # we want a load balancer with certain characteristics
 # the DEV environment will use the latest version of the module
@@ -37,7 +40,10 @@ module "ssh_key" {
   public_keys = "${var.public_keys}"
 }
 
-# OUTPUTS
+###########
+# OUTPUTS #
+###########
+
 # these outputs are not strictly necessary, but they will provide us with some
 # values automatically after running terraform apply
 output "load balancer ip address" {

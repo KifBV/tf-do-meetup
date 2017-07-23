@@ -16,12 +16,6 @@ provider "digitalocean" {
 # VARIABLES #
 #############
 
-# Set the token value using -var "do_token=<token>" as a CLI option (using e.g.
-# an environment variable or shell expansion).
-# Do not expose your token in plain text here!
-
-variable "do_token" { }
-
 # Location of my public key for DO Droplets. It has a default value that can be
 # overwritten in terraform.tfvars or at the CLI if necessary.
 

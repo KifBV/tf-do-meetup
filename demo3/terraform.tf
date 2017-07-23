@@ -27,9 +27,8 @@ terraform {
 # VARIABLES #
 #############
 
-variable "do_token"       { }
-#variable "aws_access_key" { }
-#variable "aws_secret_key" { }
+# none, the only variables we're using here are the do/aws credentials ones and
+# they're passed in as environment variables
 
 #############
 # RESOURCES #
