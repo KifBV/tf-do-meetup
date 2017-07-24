@@ -10,6 +10,7 @@ To run demos 1 & 2:
 To run demo 3 you'll also need:
 * the **AWS Access Key ID** and **Secret Access Key** of a user with _AdministratorAccess_ policy attached.
 * an **S3** bucket in the same account as the above user.
+* a **Circle CI** account (just go to [circleci.com](https://circleci.com/vcs-authorize/) and sign in with GitHub).
 
 ## Slides
 Clone this repository and open the `slides/index.html` file locally in your web browser to play the presentation.
