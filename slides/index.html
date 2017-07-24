@@ -9,7 +9,7 @@
 <div id="impress">
 
 <!-- Title -->
-<div class="step box" data-x="0" data-y="0" data-scale="3">
+<div class="step" data-x="0" data-y="0">
 	<h1 style="text-align:center">Infrastructure as Code with<br/>Terraform and Digital Ocean</h1>
 	<h5 style="text-align:center;color:blue"><a href="https://github.com/kifbv/tf-do-meetup/">github.com/kifbv/tf-do-meetup</a></h5>
 	<h6 style="text-align:center">DO Meetup, Bucharest - 24/07/2017</h6>
@@ -36,7 +36,7 @@
 		<li>Declarative</li>
 		<li>Dependency aware</li>
 		<li>Uses the provider's API (DO, AWS, GitHub,...)</li>
-		<li>Easy to share/audit (Git)</li>
+		<li>Easy to share/audit/replicate</li>
 	</ul>
 </div>
 
@@ -57,10 +57,8 @@
 	<ul>
 		<li>the <a>desired state</a> declared in the configuration files (.tf files)</li>
 		<li>the <a>actual state</a> it is aware of (terraform.tfstate)</li>
-		<li>the <a>existing infrastructure</a></li>
-	</ul>
-	<p>and creates an <a>execution plan</a> (+ - ~)
-	<p>(note:add output from plan)</p>
+	</ul></br>
+	<p>to create an <a>execution plan</a> (+ - ~)
 </div>
 
 <!-- Apply (create, update, delete) -->
@@ -68,7 +66,6 @@
 	<p>Based on the <a>execution plan</a>, Terraform creates/modifies/deletes resources and updates its knowledge of the infrastructure in the <a>state file</a>.</p>
 		</br>
 	<p>Terraform knows what <a>dependencies</a> exist between <a>resources</a> and creates them in the correct order.</p>
-	<p>(note:add output from apply)</p>
 </div>
 	
 <!-- Second part: demo one, single droplet -->
@@ -351,15 +348,25 @@ jobs:
 	<p>With this setup, we:
 	<ul>
 		<li>use <a>git</a> to deploy our changes to Digital Ocean</li>
-		<li>remote state</li>
+		<li>have a <a>state</a> that is safely stored and accessed</li>
 	</ul>
 </div>
 
 <!-- Conclusion -->
 <div class="step" data-x="0" data-y="2000" data-z="6000" data-rotate-x="90">
-	<p>Links
+	<ul>
+		<li><a href="https://www.terraform.io/intro/getting-started/install.html" target="_blank">Getting started with Terraform</a></li>
+		<li><a href="https://charity.wtf/2016/02/23/two-weeks-with-terraform/" target="_blank">Two weeks with Terraform</a></li>
+		<li><a href="https://blog.gruntwork.io/a-comprehensive-guide-to-terraform-b3d32832baca" target="_blank">A comprehensive guide to Terraform</a></li>
+		<li><a href="https://www.youtube.com/channel/UC-AdvAxaagE9W2f0webyNUQ" target="_blank">Hashicorp YouTube channel</a></li>
+		<li><a href="https://www.youtube.com/watch?v=wgzgVm7Sqlk" target="_blank">Evolving your infrastructure with Terraform</a></li>
+		<li><a href="https://groups.google.com/forum/#!forum/terraform-tool" target="_blank">Terraform Google group</a></li>
+	</ul>
 </div>
 
+<div class="step" data-x="1500" data-y="2000" data-z="6000" data-rotate-x="90">
+	<p style="text-align:right"><b>Thank you!</b></p>
+</div>
 <script src="js/impress.js"></script>
 <script> impress().init(); </script>
 </body>

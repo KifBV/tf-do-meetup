@@ -3,7 +3,7 @@ Digital Ocean Meetup, Bucharest - 24/07/2017
 To run demos 1 & 2:
 * download **Terraform v0.10.0-rc1** [here](https://releases.hashicorp.com/terraform/0.10.0-rc1/), unzip it and move the binary to `/usr/local/bin` or somewhere else in your `$PATH`).
 * create and download a **Digital Ocean API Token** from the [API page](https://cloud.digitalocean.com/settings/api/tokens) of your Digital Ocean profile.
-* create 2 ssh keys:
+* create **2 ssh keys**:
   * `ssh-keygen -C 'DO Meetup' -f ~/.ssh/id_rsa_do`
   * `ssh-keygen -C 'DO Meetup' -f ~/.ssh/id_rsa_github`
 
