@@ -37,7 +37,7 @@ terraform {
 # RESOURCES #
 #############
 
-#resource "digitalocean_domain" "default" {
-#  name       = "franck.live"
-#  ip_address = "10.0.0.15"
-#}
+resource "digitalocean_domain" "default" {
+  name       = "franck.live"
+  ip_address = "10.0.0.15"
+}
