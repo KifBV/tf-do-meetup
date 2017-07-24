@@ -43,7 +43,7 @@ module "load_balancer" {
 # the PROD environment will use a tagged version of the module
 module "ssh_key" {
   #source      = "../../modules/ssh_key"
-  source   = "github.com/KifBV/tf-do-meetup//demo2/modules/ssh_key"
+  source      = "github.com/KifBV/tf-do-meetup//demo2/modules/ssh_key"
   env         = "${var.env}"
   public_keys = "${var.public_keys}"
 }
