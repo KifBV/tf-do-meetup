@@ -13,7 +13,7 @@
 	<h1 style="text-align:center">Infrastructure as Code with<br/>Terraform and Digital Ocean</h1>
 	<h5 style="text-align:center;color:blue"><a href="https://github.com/kifbv/tf-do-meetup/">github.com/kifbv/tf-do-meetup</a></h5>
 	<h6 style="text-align:center">DO Meetup, Bucharest - 24/07/2017</h6>
-	<h6 style="text-align:center">franck ratier / message me on <a href="https://www.linkedin.com/in/franckratier/" target="_blank">LinkedIn</a> or <a href="https://www.meetup.com/DigitalOceanBucharest/members/225801679/" target="_blank">Meetup</a>!</h5>
+	<h6 style="text-align:center">Franck Ratier / Message me on <a href="https://www.linkedin.com/in/franckratier/" target="_blank">LinkedIn</a> or <a href="https://www.meetup.com/DigitalOceanBucharest/members/225801679/" target="_blank">Meetup</a></h5>
 </div>
 
 <!-- First part: Terraform intro -->
@@ -82,6 +82,7 @@
 </div>
 
 <div class="step" data-x="1500" data-y="2000" data-z="3000" data-rotate-x="90">
+	<p class="filename">demo1/terraform.tf</p>
 	<div class="code"># A <a>provider</a> usually needs credentials. Here, we use the DIGITALOCEAN_TOKEN
 # environment variable which is automatically sourced by Terraform.  Also, the
 # version can be (and should be) pinned with Terraform v0.10 and above. If you
@@ -94,7 +95,7 @@
 </div>
 
 <div class="step" data-x="3000" data-y="2000" data-z="3000" data-rotate-x="90">
-	<p style="text-align:right">variables in .tf files</p>
+	<p class="filename">demo1/terraform<a>.tf</a></p>
 	<div class="code"># The location of my public key for DO Droplets. It has a default value that
 # can be overwritten in terraform.tfvars or at the CLI if necessary.
 
@@ -108,7 +109,7 @@
 </div>
 
 <div class="step" data-x="4500" data-y="2000" data-z="3000" data-rotate-x="90">
-	<p style="text-align:right">variables in .tfvars files</p>
+	<p class="filename">demo1/terraform<a>.tfvars</a></p>
 	<div class="code"># Variables in terraform.tfvars in the Terraform root directory will be loaded
 # automatically.
 # To load a file with a different name, use the <i>-var-file &lt;file_name&gt;</i> CLI
@@ -118,6 +119,7 @@
 </div>
 
 <div class="step" data-x="6000" data-y="2000" data-z="3000" data-rotate-x="90">
+	<p class="filename">demo1/terraform.tf</p>
 	<div class="code"># Some <a>arguments</a> are required, others are optional (see the provider's docs). The
 # value for the 'ssh_keys' argument is the 'fingerprint' <a>attribute</a> of the
 # 'digitalocean_ssh_key' resource.
@@ -161,12 +163,13 @@ terraform <a>apply</a></div>
 
 <!-- Third part: demo two, load balancer -->
 <div class="step" data-x="0" data-y="2000" data-z="4000" data-rotate-x="90">
-	<p>There are multiple ways of organising our code to accomodate multiple separate environments.</p></br>
+	<p>There are various ways to organise our code to accomodate multiple separate environments.</p></br>
 	<p>Here we will make use of <a>modules</a> and put the configuration files in separate folders.</p></br>
-	<P>Other possibilities exist, like separating by branch (prod/dev) or using terraform workspaces.</p>
+	<p>Other possibilities exist and can be combined (branches, terraform env/workspace, terraform_remote_state,...).</p></br>
 </div>
 
 <div class="step" data-x="1500" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p class="filename">demo2/</p>
 	<div class="code">.
 ├── environment
 │   ├── dev
@@ -210,41 +213,50 @@ terraform <a>apply</a></div>
 </div>
 
 <div class="step" data-x="6000" data-y="2000" data-z="4000" data-rotate-x="90">
-	<p style="text-align:right;font-size:24px">demo2/environment/dev/terraform.tf</p>
-	<div class="code">module "ssh_key" {
-  #source      = "../../modules/ssh_key"
-  source   = "github.com/KifBV/tf-do-meetup//demo2/modules/ssh_key"
-  <a>env         = "${var.env}"</a>
-  <a>public_keys = "${var.public_keys}"</a>
-}</div>
-	<p style="text-align:right;font-size:24px">demo2/modules/ssh_key/main.tf</p>
-	<div class="code">resource "digitalocean_ssh_key" "mod" {
-  <a>count</a>      = "${length(split(",", var.public_keys))}"
-  name       = "${var.env}-ssh-key-<a>${count.index}</a>"
-  public_key = "${file(element(split(",", var.public_keys), <a>count.index</a>))}"
-}</div>
-	<p style="text-align:right;font-size:24px">demo2/environment/dev/terraform.tfvars</p>
-	<div class="code">env         = "dev"
-public_keys = "~/.ssh/id_rsa_do.pub,~/.ssh/id_rsa_github.pub"</div>
+	<p>The <a>count</a> meta-parameter allows us to create multiple resources without repeating resource blocks.</p></br>
+	<p><a>Modules</a> allow us to re-use blocks of code, and we can even source them from GitHub to re-use them in different projects.</p>
 </div>
 
 <div class="step" data-x="7500" data-y="2000" data-z="4000" data-rotate-x="90">
-	<p><a>Modules</a> allow us to re-use blocks of code, and by sourcing them from GitHub we can re-use them in different projects.</p></br>
-	<p>The <a>count</a> meta-parameter allows us to create multiple resources without repeating resource blocks.</p>
-</div>
-
-<div class="step" data-x="9000" data-y="2000" data-z="4000" data-rotate-x="90">
-	<p>The previous example mixes both <a>modules</a> and <a>count</a>, but here is a simpler example:</p>
-	<div class="code">resource "digitalocean_droplet" "vm1" {
+	<p>Here is a simple example of using <a>count</a>:</p>
+	<div class="code">resource "digitalocean_droplet" "vm" {
   <a>count    = 4</a>
   image    = "ubuntu-16-04-x64"
-  name     = "demo-<a>${count.index}</a>"
+  name     = "vm-<a>${count.index}</a>"
   region   = "fra1"
   size     = "512mb"
 }</div>
 </div>
 
+<div class="step" data-x="9000" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p class="filename">demo2/environment/<a>dev</a>/terraform.tf</p>
+	<div class="code">module "ssh_key" {
+  #source      = "../../modules/ssh_key"
+  <a>source   = "github.com/KifBV/tf-do-meetup//demo2/modules/ssh_key"</a>
+  ...
+}</div>
+	<p class="filename">demo2/environment/<a>prod</a>/terraform.tf</p>
+	<div class="code">module "ssh_key" {
+  #source      = "../../modules/ssh_key"
+  <a>source   = "github.com/KifBV/tf-do-meetup//demo2/modules/ssh_key?ref=v0.2"</a>
+  ...
+}</div>
+</div>
+
 <div class="step" data-x="10500" data-y="2000" data-z="4000" data-rotate-x="90">
+	<p class="filename">demo2/modules/ssh_key/main.tf</p>
+	<div class="code">resource "digitalocean_ssh_key" "mod" {
+  <a>count</a>      = "${length(split(",", var.public_keys))}"
+  name       = "${var.env}-ssh-key-<a>${count.index}</a>"
+  public_key = "${file(element(split(",", var.public_keys), <a>count.index</a>))}"
+}</div>
+	<p class="filename">demo2/environment/dev/terraform.tfvars</p>
+	<div class="code">env           = "dev"
+public_keys   = "~/.ssh/id_rsa_do.pub,~/.ssh/id_rsa_github.pub"
+	</div>
+</div>
+
+<div class="step" data-x="12000" data-y="2000" data-z="4000" data-rotate-x="90">
 	<p>We've created our second set of resources with Terraform and:</p>
 	<ul>
 		<li>we've found ways to avoid repeating ourselves</li>
@@ -274,7 +286,7 @@ public_keys = "~/.ssh/id_rsa_do.pub,~/.ssh/id_rsa_github.pub"</div>
 </div>
 
 <div class="step" data-x="1500" data-y="2000" data-z="5000" data-rotate-x="90">
-	<p>Also, in order to avoid conflicts or discrepancies when team members will be planning/applying Terraform configurations, we'll introduce a <a>CI/CD</a> setup with Circle CI.
+	<p>Also, in order to avoid conflicts or discrepancies when team members will be planning/applying Terraform configurations, we'll introduce a <a>CI/CD</a> pipeline with Circle CI.
 	<div class="code">  <a>GitHub</a>  +-------------->  <a>Circle CI</a> <------------------->  <a>AWS S3</a>
      ^          hook            ^        remote state mgmt    (remote state)
      |                          |
@@ -287,7 +299,7 @@ public_keys = "~/.ssh/id_rsa_do.pub,~/.ssh/id_rsa_github.pub"</div>
 </div>
 
 <div class="step" data-x="3000" data-y="2000" data-z="5000" data-rotate-x="90">
-	<p style="text-align:right">demo3/terraform.tf</p>
+	<p class="filename">demo3/terraform.tf</p>
 	<div class="code">provider "digitalocean" {
   version = "~&gt; 0.1"
 }
@@ -310,7 +322,7 @@ terraform {
 </div>
 
 <div class="step" data-x="4500" data-y="2000" data-z="5000" data-rotate-x="90">
-	<p style="text-align:right">.circleci/config.yml</p>
+	<p class="filename">.circleci/config.yml</p>
 	<div class="code">version: 2
 jobs:
   build:

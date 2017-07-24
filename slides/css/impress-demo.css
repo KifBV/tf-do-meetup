@@ -199,6 +199,11 @@ a:focus {
     	line-height: 1.1;
 }
 
+.filename {
+	font-family: 'Inconsolata', monospace;
+	text-align: right;
+	font-size: 24px;
+}
 /*
     ... and we enhance the styles for impress.js.
 
