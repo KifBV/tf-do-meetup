@@ -28,7 +28,7 @@ variable "droplet_tag"   { }
 module "load_balancer" {
   #source      = "../../modules/load_balancer"
   source   = "github.com/KifBV/tf-do-meetup//demo2/modules/load_balancer"
-  name        = "demo1"
+  name        = "demo2"
   count       = "${var.droplet_count}"
   env         = "${var.env}"
   region      = "${var.region}"
