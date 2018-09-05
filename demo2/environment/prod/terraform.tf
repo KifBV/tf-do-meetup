@@ -24,7 +24,6 @@ variable "droplet_tag"   { }
 # we want a load balancer with certain characteristics
 # the PROD environment will use a tagged version of the module
 module "load_balancer" {
-  #source      = "../../modules/load_balancer"
   source   = "github.com/KifBV/tf-do-meetup//demo2/modules/load_balancer?ref=v0.2"
   name        = "demo2"
   count       = "${var.droplet_count}"
@@ -40,8 +39,7 @@ module "load_balancer" {
 # multiple times (e.g module "ssh_key_1", module "ssh_key_2",...)
 # the PROD environment will use a tagged version of the module
 module "ssh_key" {
-  #source      = "../../modules/ssh_key"
-  source      = "github.com/KifBV/tf-do-meetup//demo2/modules/ssh_key?ref=v0.2"
+  source      = "github.com/KifBV/tf-do-meetup//demo2/modules/ssh_key?ref=v0.3"
   env         = "${var.env}"
   public_keys = "${var.public_keys}"
 }
