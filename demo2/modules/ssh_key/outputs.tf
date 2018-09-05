@@ -3,5 +3,5 @@ output "fingerprints" {
 }
 
 output "ids" {
-  value = "${join(",", digitalocean_ssh_key.mod.*.ids)}"
+  value = "${join(",", digitalocean_ssh_key.mod.*.id)}"
 }
