@@ -5,7 +5,7 @@ You'll need a fork of this repo so you can push to it.
 Change the `bucket` and `region` values according to your own AWS account.
 ### Configure Circle CI
 * Register the repo with Circle CI (add it as a project, ignore the step about the config file, just click on the 'Start building' button)
-* Run the first build (it will fail but we can't setup environment variables if we don't complete this step)
+* It will fail but we can't setup environment variables if we don't complete this step (TBC)
 * Create the following environment variables in the Circle CI project:
   * `DIGITALOCEAN_TOKEN=<your_do_token>`
   * `AWS_ACCESS_KEY_ID=<your_aws_access_key_id>`
