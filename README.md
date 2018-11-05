@@ -8,7 +8,7 @@ To run demos 1 & 2:
   * `ssh-keygen -C 'DO Meetup' -f ~/.ssh/id_rsa_github`
 
 To run demo 3 you'll also need:
-* the **AWS Access Key ID** and **Secret Access Key** of a user with _AdministratorAccess_ policy attached.
+* the **AWS Access Key ID** and **Secret Access Key** of a user with _AmazonS3FullAccess_ policy attached.
 * an **S3** bucket in the same account as the above user.
 * a **Circle CI** account (just go to [circleci.com](https://circleci.com/vcs-authorize/) and sign in with GitHub).
 
