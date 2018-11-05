@@ -4,7 +4,7 @@ jobs:
     machine: true
     working_directory: ~/repo
     environment:
-      - TF_VERS: "0.10.0-rc1"
+      - TF_VERS: "0.11.10"
       - TF_ARCH: "linux_amd64"
       - TF_REPO: "https://releases.hashicorp.com/terraform"
     steps:
@@ -19,4 +19,4 @@ jobs:
           working_directory: ~/repo/demo3
           name: Run Terraform
           command: |
-            ./terraform init && ./terraform plan && ./terraform apply
+            ./terraform init && ./terraform plan && ./terraform apply -auto-approve

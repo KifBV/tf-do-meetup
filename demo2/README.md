@@ -2,7 +2,7 @@ This demo creates a **load balancer** to illustrate Terraform modules, variable 
 ### Initialise the configuration
 * change directory to the development environment: `cd environment/dev`
 * export your Digital Ocean Token: `export DIGITALOCEAN_TOKEN=<your_token>`
-* initialise Terraform and retrieve the modules: `terraform init && terraform get`
+* initialise Terraform and retrieve the modules: `terraform init`
 ### Create the infrastructure
 * plan the Terraform configuration: `terraform plan`
 * create the resources: `terraform apply`
